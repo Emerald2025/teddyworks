@@ -1,0 +1,38 @@
+{%- if section.settings.show_product_shipping -%}
+    <div class="product-shipping-method">
+    {%- if section.settings.heading != blank -%}
+        <div class="section-header text-center">
+        <h2>{{ section.settings.heading | escape }}</h2>
+        </div>
+    {%- endif -%}
+        <div class="product-shipping-content">
+            <p>{{ section.settings.text }}</p>
+        </div>
+    </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "出荷について",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_product_shipping",
+      "label": "表示する",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "見出し",
+      "default": "出荷について"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "テキスト",
+      "default": "<p>このテキストを使用して、出荷に関する情報をお客様と共有します。</p>"
+    }
+  ]
+}
+{% endschema %}

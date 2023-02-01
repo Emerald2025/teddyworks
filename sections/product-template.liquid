@@ -1,3 +1,14 @@
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
+/>
+<div class="product-template-top" style="background-image: url({{ product.metafields.custom.main_image | file_url }})">
+  <div class="product-template-top-inner">
+    <h2 class="product-title">{{ product.metafields.custom.main_title }}</h2>
+    <p class="catchcopy">{{ product.metafields.custom.catch_copy | newline_to_br  }}</p>
+    <a href="#product-single-detail">購入する</a>
+  </div>
+</div>
 <div class="product-template__container page-width"
   id="ProductSection-{{ section.id }}"
   data-section-id="{{ section.id }}"
@@ -5,6 +16,91 @@
   data-enable-history-state="true"
   data-ajax-enabled="{{ settings.enable_ajax }}"
 >
+<div class="product_template_detail product_template_left">
+  <div class="product_template_detail_image">
+    <img src="{{ product.metafields.point.point1_image | file_url }}">
+  </div>
+  <div class="product_template_detail_text">
+    <h3>{{ product.metafields.point.point1_title }}</h3>
+    <div class="product_detail_text_divider"></div>
+    <i class="fa-solid fa-circle-check"></i>
+    <ul>
+      <li>{{ product.metafields.point.point1_text1 }}</li>
+      <li>{{ product.metafields.point.point1_text2 }}</li>      
+      <li>{{ product.metafields.point.point1_text3 }}</li>      
+      <li>{{ product.metafields.point.point1_text4 }}</li>      
+    </ul>
+    <a href="#product-single-detail">購入する</a>  
+  </div>
+</div>
+<div class="product_template_detail product_template_right">
+  <div class="product_template_detail_image">
+    <img src="{{ product.metafields.point.point2_image | file_url }}">
+  </div>
+  <div class="product_template_detail_text">
+    <h3>{{ product.metafields.point.point2_title }}</h3>
+    <div class="product_detail_text_divider"></div> 
+    <p>{{ product.metafields.point.point2_text | newline_to_br }}</p> 
+    <a href="#product-single-detail">購入する</a>    
+  </div>
+</div>
+<div class="product_template_video full-width">
+  <video width="100%" height="auto" type="video/mp4" src="{{ product.metafields.custom.video | file_url }}" controlslist="nodownload" disablepictureinpicture="" controls id="product_intro_video"></video>
+  <a id="playVid">
+    <svg width="64" height="64" viewBox="0 0 48 48">
+      <path d="M24.0003 47.8334C37.1631 47.8334 47.8337 37.1629 47.8337 24.0001C47.8337 10.8373 37.1631 0.166748 24.0003 0.166748C10.8375 0.166748 0.166992 10.8373 0.166992 24.0001C0.166992 37.1629 10.8375 47.8334 24.0003 47.8334Z" fill="rgb(193, 193, 193, .61)"></path><path d="M19.667 32.6668V15.3335L32.667 24.0002L19.667 32.6668Z" fill="#fff"></path>
+    </svg>
+  </a>
+</div>
+{%- if product.metafields.slideshow != blank -%}
+<div class="swiper-container swiper-container-free-mode">
+  <div class="swiper-wrapper">
+    {% for slide in product.metafields.slideshow %}
+      {% if slide.last.value contains "files/" %}      
+          <div class="swiper-slide" style="background-image:url({{ slide.last.value | replace: "files/", "" | file_url }})"></div>
+      {% endif %}
+    {% endfor %}  
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>  
+<script>
+  var swiperOptions = {
+    loop: true,
+    freeMode: true,
+    spaceBetween: 0,
+    grabCursor: true,
+    slidesPerView: 'auto',
+    slidesOffsetAfter:0, 
+    loopFillGroupBlank: false,    
+    loop: true,
+    autoplay: {
+      delay: 1,
+      disableOnInteraction: true
+    },
+    speed:5000,
+    freeModeMomentum: false
+  };
+  
+  var swiper = new Swiper(".swiper-container", swiperOptions);
+  
+  let wrapper = document.querySelector(".swiper-wrapper");
+  let transformValue;
+  
+  wrapper.addEventListener("mouseenter", (event) => {
+    swiper.autoplay.stop();
+    transformValue = wrapper.style.transform;
+    wrapper.style.transitionDuration = "0ms";
+    wrapper.style.transform =
+      "translate3d(" + swiper.getTranslate() + "px, 0px, 0px)";
+  });
+  
+  wrapper.addEventListener("mouseleave", (event) => {
+    wrapper.style.transitionDuration = swiper.params.speed + "ms";
+    wrapper.style.transform = transformValue;
+    swiper.autoplay.start();
+  });
+</script>
+{%- endif -%}
   {% comment %}
     Get first variant, or deep linked one
   {% endcomment %}
@@ -35,7 +131,7 @@
       {%- assign enable_image_zoom = false -%}
   {% endcase %}
 
-  <div class="grid product-single{% if section.settings.enable_payment_button %} product-single--{{ section.settings.media_size }}-media{% endif %}">
+  <div class="grid product-single{% if section.settings.enable_payment_button %} product-single--{{ section.settings.media_size }}-media{% endif %}" id="product-single-detail">
     <div class="grid__item product-single__media-group {{ product_media_width }}{% if section.settings.media_size == 'full' %} product-single__media-group--full{% endif %}" data-product-single-media-group>
       {%- assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
 
@@ -72,7 +168,7 @@
         <div data-thumbnail-slider>
           <div class="thumbnails-wrapper{% if enable_thumbnail_slides == true %} slider-active{% endif %}" data-slider>
             {% if enable_thumbnail_slides == true %}
-              <button type="button" class="btn btn--link medium-up--hide thumbnails-slider__btn thumbnails-slider__prev thumbnails-slider__prev--{{ section.id }}" data-slider-button>
+              <button type="button" class="btn btn--link thumbnails-slider__btn thumbnails-slider__prev thumbnails-slider__prev--{{ section.id }}" data-slider-button>
                 {% include 'icon-chevron-left' %}
                 <span class="icon__fallback-text">{{ 'sections.slideshow.previous_slide' | t }}</span>
               </button>
@@ -121,7 +217,7 @@
               {% endif %}
             </ul>
             {% if enable_thumbnail_slides == true %}
-              <button type="button" class="btn btn--link medium-up--hide thumbnails-slider__btn thumbnails-slider__next thumbnails-slider__next--{{ section.id }}" data-slider-button data-slider-button-next>
+              <button type="button" class="btn btn--link thumbnails-slider__btn thumbnails-slider__next thumbnails-slider__next--{{ section.id }}" data-slider-button data-slider-button-next>
                 {% include 'icon-chevron-right' %}
                 <span class="icon__fallback-text">{{ 'sections.slideshow.next_slide' | t }}</span>
               </button>
@@ -132,14 +228,20 @@
     </div>
     <div class="grid__item {{ product_description_width }}">
       <div class="product-single__meta">
-
-        <h1 class="product-single__title">{{ product.title }}</h1>
+        <h1 class="product-single__title">{{ product.title }}</h1>       
+        <div class="rating">
+          {% if  product.metafields.reviews.rating_count > 0  %}
+            {% assign rating_integer = product.metafields.reviews.rating.value | append: "" | floor | plus: 0 %}
+            {% assign rating_decimal = product.metafields.reviews.rating.value | append: "" | minus:4 | round: 1 %}
+            <span aria-hidden="true" class="rating-star color-icon-text" style="--rating: {{ rating_integer }}; --rating-max: 5.0; --rating-decimal: {{ rating_decimal }};"></span>({{ product.metafields.reviews.rating_count }})
+          {% endif %}
+        </div>
         <script>window.performance.mark('debut:product:title_visible');</script>
-			
+      
           <div class="product__price">
             {% include 'product-price', variant: current_variant, show_vendor: section.settings.show_vendor %}
           </div>
-			
+      
           {%- if cart.taxes_included or shop.shipping_policy.body != blank -%}
             <div class="product__policies rte" data-product-policies>
               {%- if cart.taxes_included -%}
@@ -179,9 +281,6 @@
               </div>
             {% endunless %}
 
-       
-                 
-
             <select name="id" id="ProductSelect-{{ section.id }}" class="product-form__variants no-js">
               {% for variant in product.variants %}
                 <option value="{{ variant.id }}"
@@ -218,7 +317,7 @@
                 {%- if section.settings.enable_payment_button %} product-form__item--payment-button {%- endif -%}
                 {%- if product.has_only_default_variant %} product-form__item--no-variants {%- endif -%}"
               >
-                <button type="submit" name="add"
+                <button type="submit" id="btn_add_cart" name="add"
                   {% unless current_variant.available %} aria-disabled="true"{% endunless %}
                   aria-label="{% unless current_variant.available %}{{ 'products.product.sold_out' | t }}{% else %}{{ 'products.product.add_to_cart' | t }}{% endunless %}"
                   class="btn product-form__cart-submit{% if section.settings.enable_payment_button and product.selling_plan_groups == empty %} btn--secondary-accent{% endif %}"
@@ -269,18 +368,155 @@
           data-base-url="{{ shop.url }}{{ routes.root_url }}"
         >
         </div>
-
         <div class="product-single__description rte">
           {{ product.description }}
         </div>
-
+        <div class="Product__Tabs">
+          {%- if section.settings.show_product_shipping -%}
+              <div class="product-common-info Collapsible">
+              {%- if section.settings.shipping_heading != blank -%}
+                  <button class="Collapsible__Button">{{ section.settings.shipping_heading | escape }}</button>
+              {%- endif -%}
+                  <div class="product-info-content">{{ section.settings.shipping_text }}</div>
+              </div>
+          {%- endif -%}
+          {%- if section.settings.show_product_delivery -%}
+              <div class="product-common-info Collapsible">
+              {%- if section.settings.delivery_heading != blank -%}
+                  <button class="Collapsible__Button">{{ section.settings.delivery_heading | escape }}</button>
+              {%- endif -%}
+                  <div class="product-info-content">{{ section.settings.delivery_text }}</div>
+              </div>
+          {%- endif -%}
+          {%- if section.settings.show_product_purchase -%}
+              <div class="product-common-info Collapsible">
+              {%- if section.settings.purchase_heading != blank -%}
+                  <button class="Collapsible__Button">{{ section.settings.purchase_heading | escape }}</button>
+              {%- endif -%}
+                  <div class="product-info-content">{{ section.settings.purchase_text }}</div>
+              </div>
+          {%- endif -%}
+          {%- if section.settings.show_product_note -%}
+              <div class="product-common-info Collapsible">
+              {%- if section.settings.note_heading != blank -%}
+                  <button class="Collapsible__Button">{{ section.settings.note_heading | escape }}</button>
+              {%- endif -%}
+                  <div class="product-info-content">{{ section.settings.note_text }}</div>
+              </div>
+          {%- endif -%}
+          {%- if product.metafields.product.specification != blank -%}
+              <div class="product-common-info Collapsible">
+                  <button class="Collapsible__Button">仕様</button>
+                  <div class="product-info-content">{{ product.metafields.product.specification | newline_to_br }}</div>
+              </div>            
+          {% endif %}
+          {%- if product.metafields.product.notices != blank -%}
+              <div class="product-common-info Collapsible">
+                  <button class="Collapsible__Button">特記事項</button>
+                  <div class="product-info-content">{{ product.metafields.product.notices | newline_to_br }}</div>
+              </div>            
+          {% endif %}          
+        </div>
         {% if section.settings.show_share_buttons %}
           {% include 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product.featured_media %}
         {% endif %}
     </div>
   </div>
+  {% unless product.has_only_default_variant  %}
+    <div class="section-header text-center"><h2>オプション品</h2></div>
+    <div class="product-variants grid">
+    {% for variant in product.variants %}
+      <div class="product-variant grid__item medium-up--one-quarter">
+        <div class="product-variant-image text-center"> 
+          <img src="{{ variant.image.src | product_img_url: '200x' }}">
+        </div>
+        <p class="product-variant-title">{{ product.title }}<br>{{ variant.title }}</p>
+        {% include 'product-price', variant: variant, show_vendor: false %}
+        {% form 'product', product %}
+          <input type="hidden" value="{{ variant.id }}" name="id">
+          <button type="submit" name="add"
+            {% unless variant.available %} aria-disabled="true"{% endunless %}
+            aria-label="{% unless variant.available %}{{ 'products.product.sold_out' | t }}{% else %}{{ 'products.product.add_to_cart' | t }}{% endunless %}"
+            class="btn product-form__cart-submit{% if section.settings.enable_payment_button and product.selling_plan_groups == empty %} btn--secondary-accent{% endif %}"
+            {% if settings.enable_ajax %}aria-haspopup="dialog"{% endif %}
+            data-add-to-cart>
+            <span data-add-to-cart-text>
+              {% unless variant.available %}
+                {{ 'products.product.sold_out' | t }}
+              {% else %}
+                {{ 'products.product.add_to_cart' | t }}
+              {% endunless %}
+            </span>
+            <span class="hide" data-loader>
+              {% include 'icon-spinner' %}
+            </span>
+          </button>
+        {% endform %}      
+      </div>
+    {% endfor %}
+    </div>
+  {% endunless %}
+  {%- if recommendations.performed -%}
+    {%- if recommendations.products_count > 0 -%}
+      <div class="product-recommendations__inner">
+          <div class="section-header text-center">
+            <h2>おすすめ商品</h2>
+          </div>
+          <ul class="grid grid--uniform grid--view-items">
+            {%- for product in recommendations.products -%}
+              <li class="grid__item small--one-half medium-up--one-quarter">
+                {% include 'product-card-grid', max_height: 250, product: product, show_vendor: section.settings.show_vendor %}
+              </li>
+            {%- endfor -%}
+          </ul>
+      </div>
+    {%- endif -%}
+  {%- else  -%}
+    <div class="page-width" data-base-url="{{ routes.product_recommendations_url }}" data-product-id="{{ product.id }}" data-section-id="{{ section.id }}" data-section-type="product-recommendations"></div>
+  {%- endif -%}
+  <div class="page-width" data-base-url="{{ routes.product_recommendations_url }}" data-product-id="{{ product.id }}" data-section-id="{{ section.id }}" data-section-type="product-recommendations">
+      <div class="product-recommendations__inner">
+          <div class="section-header text-center">
+            <h2>おすすめ商品</h2>
+          </div>
+          <ul class="grid grid--uniform grid--view-items">
+            {% assign recommend_count = 0 %}
+            {% assign current_product_id = product.id %}            
+            {% for product in collections.kensui.products %}
+              {% if recommend_count < 4 and product.id != current_product_id and product.id != 6597236064417 %}  
+              {% assign recommend_count = recommend_count | plus: 1 %}
+              <li class="grid__item small--one-half medium-up--one-quarter">
+                {% include 'product-card-grid', max_height: 250, product: product, show_vendor: section.settings.show_vendor %}
+              </li>
+              {% endif %}
+            {%- endfor -%}
+          </ul>
+      </div>
+  </div>
 </div>
-<div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+<div id="product_variants_all" style="display:none" class="page-width">
+    <div class="section-header text-center"><h2>オプション品</h2></div>  
+  <div class="product-variants grid">
+    {% assign product_ids = '' %}
+    {% assign arr_product_ids = product_ids | split: ',' %}
+    {% for item in cart.items %}
+      {% assign product = item.product %}
+      {% unless arr_product_ids contains product.id %}
+        {% assign product_ids = product_ids | append: product.id | append: ',' %}
+        {% for variant in product.variants %}
+          <div class="product-variant grid__item medium-up--one-quarter">
+            <div class="product-variant-image text-center"> 
+              <img src="{{ variant.image.src | product_img_url: '200x' }}">
+            </div>
+            <p class="product-variant-title">{{ product.title }}<br>{{ variant.title }}</p>
+            {% include 'product-price', variant: variant, show_vendor: false %}    
+          </div>
+        {% endfor %}        
+      {% endunless %}      
+    {% endfor %}
+  </div>
+</div>
+<div id="shopify-product-reviews" class="page-width" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
 {% unless product == empty %}
   <script type="application/json" id="ProductJson-{{ section.id }}">
     {{ product | json }}
@@ -289,8 +525,43 @@
     {{ product.media | where: 'media_type', 'model' | json }}
   </script>
 {% endunless %}
-
-
+<script>
+  var el_product_variants = document.getElementById("product_variants_all");
+  localStorage.setItem("product_variants", el_product_variants.outerHTML);
+</script>
+<script> 
+  var playButton = document.getElementById("playVid");
+  var video = document.getElementById("product_intro_video")
+  // Event listener for the play/pause button
+  playButton.addEventListener("click", function() {
+    if (video.paused == true) {
+      // Play the video
+      video.play();
+  
+      // Update the button text to 'Pause'
+      playButton.style.opacity = 0;
+    }
+  }); 
+  video.addEventListener("pause", function() {
+    playButton.style.opacity = 1;
+  });
+  var coll = document.getElementsByClassName("Collapsible__Button");
+  var i;
+  
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active");   
+      var content = this.nextElementSibling;      
+      if (content.style.maxHeight){
+        content.style.maxHeight = null;
+        content.style.overflow = "hidden";
+      } else {
+        content.style.maxHeight = content.scrollHeight + "px";
+        content.style.overflow = "visible";        
+      } 
+    });
+  }  
+</script>
 
 {% schema %}
 {
@@ -317,6 +588,7 @@
     "zh-CN": "产品页面",
     "zh-TW": "產品頁面"
   },
+  
   "settings": [
     {
       "type": "checkbox",
@@ -691,6 +963,78 @@
         "zh-TW": "啟用影片循環功能"
       },
       "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_shipping",
+      "label": "出荷情報を表示する",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "shipping_heading",
+      "label": "出荷情報見出し",
+      "default": "出荷について"
+    },
+    {
+      "type": "richtext",
+      "id": "shipping_text",
+      "label": "出荷情報",
+      "default": "<p>このテキストを使用して、出荷に関する情報をお客様と共有します。</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_delivery",
+      "label": "配送日情報を表示する",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "delivery_heading",
+      "label": "配送日情報見出し",
+      "default": "配送日指定について"
+    },
+    {
+      "type": "richtext",
+      "id": "delivery_text",
+      "label": "配送日情報",
+      "default": "<p>このテキストを使用して、配送日に関する情報をお客様と共有します。</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_purchase",
+      "label": "支払い情報を表示する",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "purchase_heading",
+      "label": "支払い情報見出し",
+      "default": "お支払い方法"
+    },
+    {
+      "type": "richtext",
+      "id": "purchase_text",
+      "label": "支払い情報",
+      "default": "<p>このテキストを使用して、支払いに関する情報をお客様と共有します。</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_note",
+      "label": "注意点を表示する",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "note_heading",
+      "label": "注意点見出し",
+      "default": "ご注意点"
+    },
+    {
+      "type": "richtext",
+      "id": "note_text",
+      "label": "注意点",
+      "default": "<p>このテキストを使用して、注意点をお客様と共有します。</p>"
     }
   ]
 }

@@ -120,11 +120,23 @@
               {% endif %}
             {%- when 'link_list' -%}
               {%- assign custom_linklist = block.settings.menu -%}
+              <p class="menu-title">{{ linklists[custom_linklist].title }}</p>
               <ul class="list--inline custom__linklist">
                 {%- for link in linklists[custom_linklist].links -%}
+                  {% assign linkName = link.title | handleize  %}
+                  {% capture  imagePath %}
+                    https://cdn.shopify.com/s/files/1/0553/8925/7889/files/{{ linklists[custom_linklist].title | downcase }}{{ forloop.index }}.png 
+                  {% endcapture %}                  
                   <li class="custom__linklist-item">
+                    <div class="product-item">
+                      <div class="icon-wrapper">
+                          {% if imagePath !=blank %}
+                            <img src={{ imagePath }}>
+                          {% endif %}
+                      </div>
+                      {{ link.title }}                  
+                    </div>
                     <a href="{{ link.url }}" class="custom__linklist-link">
-                      {{ link.title | escape }}
                     </a>
                   </li>
                 {%- endfor -%}

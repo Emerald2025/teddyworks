@@ -3063,7 +3063,10 @@ theme.MobileNav = (function() {
 
   function init() {
     cacheSelectors();
-
+    
+    cache.mobileNavContainer.style.top = 
+      cache.siteHeader.offsetHeight+'px';
+    
     if (cache.mobileNavToggle) {
       cache.mobileNavToggle.addEventListener('click', toggleMobileNav);
     }
@@ -3115,10 +3118,10 @@ theme.MobileNav = (function() {
     cache.mobileNavContainer.classList.add(classes.navOpen);
 
     cache.mobileNavContainer.style.transform =
-      'translateY(' + translateHeaderHeight + 'px)';
+      'translateX(0px)';    
 
     cache.pageContainer.style.transform =
-      'translate3d(0, ' + cache.mobileNavContainer.scrollHeight + 'px, 0)';
+      'translateX(-100%)';
 
     slate.a11y.trapFocus({
       container: cache.sectionHeader,
@@ -3141,7 +3144,7 @@ theme.MobileNav = (function() {
   function closeMobileNav() {
     theme.Helpers.prepareTransition(cache.mobileNavContainer);
     cache.mobileNavContainer.classList.remove(classes.navOpen);
-    cache.mobileNavContainer.style.transform = 'translateY(-100%)';
+    cache.mobileNavContainer.style.transform = 'translateX(100%)';
     cache.pageContainer.setAttribute('style', '');
 
     slate.a11y.trapFocus({
@@ -3220,7 +3223,6 @@ theme.MobileNav = (function() {
     var openNavClass =
       menuLevel > 2 ? classes.thirdNavShowing : classes.subNavShowing;
 
-    cache.mobileNavContainer.style.height = translateMenuHeight + 'px';
     cache.mobileNavContainer.classList.remove(classes.thirdNavShowing);
     cache.mobileNavContainer.classList.add(openNavClass);
 
@@ -3252,10 +3254,6 @@ theme.MobileNav = (function() {
 
       isTransitioning = false;
     }
-
-    // Match height of subnav
-    cache.pageContainer.style.transform =
-      'translateY(' + translateMenuHeight + 'px)';
 
     activeSubNav.classList.remove(classes.subNavClosing);
   }
@@ -7872,8 +7870,8 @@ theme.Product = (function() {
 
     this.settings = {
       // Breakpoints from src/stylesheets/global/variables.scss.liquid
-      mediaQueryMediumUp: 'screen and (min-width: 750px)',
-      mediaQuerySmall: 'screen and (max-width: 749px)',
+      mediaQueryMediumUp: 'screen and (min-width: 5000px)',
+      mediaQuerySmall: 'screen and (max-width: 4999px)',
       bpSmall: false,
       enableHistoryState:
         container.getAttribute('data-enable-history-state') === 'true',
@@ -9685,3 +9683,13 @@ function removeImageLoadingAnimation(image) {
     imageWrapper.removeAttribute('data-image-loading-animation');
   }
 }
+// var current_quote = 0;
+// $(document).ready(function(){
+// 	var intervalId = setInterval(function() {
+// 	  $('.quotes-wrapper .slick-dots li').eq(current_quote).find('button').trigger('click');
+// 	  if(current_quote < ($('.slick-dots li').length - 3))
+// 	  	current_quote++;
+// 	  else
+// 	  	current_quote = 0;
+// 	}, 4000);
+// })
