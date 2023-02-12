@@ -2,6 +2,11 @@
   The contents of the product.liquid template can be found in /sections/product-template.liquid
 {% endcomment %}
 
+{% include 'product-landing', product: product %}
+{% if product.metafields.custom.main_title == "KENSUI -kaku-" %}
+  {% section 'quotes' %}
+  {% include 'about-us' %}
+{% endif %}
 {% section 'product-template' %}
 <div style="display:none">
 {% section 'product-recommendations' %}

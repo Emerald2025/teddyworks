@@ -7870,8 +7870,8 @@ theme.Product = (function() {
 
     this.settings = {
       // Breakpoints from src/stylesheets/global/variables.scss.liquid
-      mediaQueryMediumUp: 'screen and (min-width: 5000px)',
-      mediaQuerySmall: 'screen and (max-width: 4999px)',
+      mediaQueryMediumUp: 'screen and (min-width: 750px)',
+      mediaQuerySmall: 'screen and (max-width: 749px)',
       bpSmall: false,
       enableHistoryState:
         container.getAttribute('data-enable-history-state') === 'true',

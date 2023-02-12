@@ -1,50 +1,50 @@
+<div class="grid product-points">{% render 'preorder-now-collection-item', product: product %}
+  {% if product.metafields.point.point1_image != blank %}
+  <div class="product_template_detail grid__item medium-up--one-half small--one-whole">
+    <div class="product_template_detail_image">
+      <img src="{{ product.metafields.point.point1_image | file_url }}">
+    </div>
+  </div>
+  {% endif %}
+  {% if product.metafields.point.point2_image != blank %}
+  <div class="product_template_detai grid__item medium-up--one-half small--one-whole">
+    <div class="product_template_detail_image">
+      <img src="{{ product.metafields.point.point2_image | file_url }}">
+    </div>
+  </div>
+  {% endif %}
+  {% if product.metafields.point.point3_image != blank %}
+  <div class="product_template_detai grid__item medium-up--one-half small--one-whole">
+    <div class="product_template_detail_image">
+      <img src="{{ product.metafields.point.point3_image | file_url }}">
+    </div>
+  </div>
+  {% endif %}
+  {% if product.metafields.point.point4_image != blank %}
+  <div class="product_template_detai grid__item medium-up--one-half small--one-whole">
+    <div class="product_template_detail_image">
+      <img src="{{ product.metafields.point.point4_image | file_url }}">
+    </div>
+  </div>
+  {% endif %}  
+</div>
+{% if product.metafields.custom.video != blank %}
+<div class="product_template_video">
+  <video width="100%" height="auto" type="video/mp4" src="{{ product.metafields.custom.video | file_url }}" controlslist="nodownload" disablepictureinpicture="" controls id="product_intro_video"></video>
+  <a id="playVid">
+    <svg width="64" height="64" viewBox="0 0 48 48">
+      <path d="M24.0003 47.8334C37.1631 47.8334 47.8337 37.1629 47.8337 24.0001C47.8337 10.8373 37.1631 0.166748 24.0003 0.166748C10.8375 0.166748 0.166992 10.8373 0.166992 24.0001C0.166992 37.1629 10.8375 47.8334 24.0003 47.8334Z" fill="rgb(193, 193, 193, .61)"></path><path d="M19.667 32.6668V15.3335L32.667 24.0002L19.667 32.6668Z" fill="#fff"></path>
+    </svg>
+  </a>
+</div>
+{% endif %}  
 <div class="product-template__container page-width"
   id="ProductSection-{{ section.id }}"
   data-section-id="{{ section.id }}"
   data-section-type="product"
   data-enable-history-state="true"
   data-ajax-enabled="{{ settings.enable_ajax }}"
->
-  {% if product.metafields.point.point1_image != blank %}
-  <div class="product_template_detail product_template_left">
-    <div class="product_template_detail_image">
-      <img src="{{ product.metafields.point.point1_image | file_url }}">
-    </div>
-    <div class="product_template_detail_text">
-      <h3>{{ product.metafields.point.point1_title }}</h3>
-      <div class="product_detail_text_divider"></div>
-      <i class="fa-solid fa-circle-check"></i>
-      <ul>
-        <li>{{ product.metafields.point.point1_text1 }}</li>
-        <li>{{ product.metafields.point.point1_text2 }}</li>      
-        <li>{{ product.metafields.point.point1_text3 }}</li>      
-        <li>{{ product.metafields.point.point1_text4 }}</li>      
-      </ul>
-    </div>
-  </div>
-  {% endif %}
-
-  {% if product.metafields.point.point2_image != blank %}
-  <div class="product_template_detail product_template_right">
-    <div class="product_template_detail_image">
-      <img src="{{ product.metafields.point.point2_image | file_url }}">
-    </div>
-    <div class="product_template_detail_text">
-      <h3>{{ product.metafields.point.point2_title }}</h3>
-      <div class="product_detail_text_divider"></div> 
-      <p>{{ product.metafields.point.point2_text | newline_to_br }}</p>  
-    </div>
-  </div>
-  <div class="product_template_video full-width">
-    <video width="100%" height="auto" type="video/mp4" src="{{ product.metafields.custom.video | file_url }}" controlslist="nodownload" disablepictureinpicture="" controls id="product_intro_video"></video>
-    <a id="playVid">
-      <svg width="64" height="64" viewBox="0 0 48 48">
-        <path d="M24.0003 47.8334C37.1631 47.8334 47.8337 37.1629 47.8337 24.0001C47.8337 10.8373 37.1631 0.166748 24.0003 0.166748C10.8375 0.166748 0.166992 10.8373 0.166992 24.0001C0.166992 37.1629 10.8375 47.8334 24.0003 47.8334Z" fill="rgb(193, 193, 193, .61)"></path><path d="M19.667 32.6668V15.3335L32.667 24.0002L19.667 32.6668Z" fill="#fff"></path>
-      </svg>
-    </a>
-  </div>
-  {% endif %}
-
+>  
   {%- assign current_variant = product.selected_or_first_available_variant -%}
   {%- assign product_image_zoom_size = '1024x1024' -%}
   {%- assign product_image_scale = '2' -%}
@@ -369,7 +369,7 @@
                 <ul>
                   <li><a href="https://lin.ee/1ekhKgi">LINEで質問</a></li>
                   <li>メールで質問(info@teddyworks.co.jp)</li>
-                  <li><a href="https://kensui.main.jp/faq.html">よくあるご質問</a></li>
+                  <li><a href="{{ shop.url }}/pages/copy-of-kensui_%E3%81%94%E8%B3%AA%E5%95%8F%E4%BE%8B">よくあるご質問</a></li>
                 </ul>
                 ※ご質問前によくあるご質問をご確認ください。
               </div>
@@ -428,9 +428,9 @@
       </div>
     {%- endif -%}
   {%- else  -%}
-    <div class="page-width" data-base-url="{{ routes.product_recommendations_url }}" data-product-id="{{ product.id }}" data-section-id="{{ section.id }}" data-section-type="product-recommendations" style="display:none"></div>
+    <div class="page-width" data-base-url="{{ routes.product_recommendations_url }}" data-product-id="{{ product.id }}" data-section-id="{{ section.id }}" data-section-type="product-recommendations"></div>
   {%- endif -%}
-  <div class="page-width" data-base-url="{{ routes.product_recommendations_url }}" data-product-id="{{ product.id }}" data-section-id="{{ section.id }}" data-section-type="product-recommendations">
+  <div class="page-width" data-base-url="{{ routes.product_recommendations_url }}" data-product-id="{{ product.id }}" data-section-id="{{ section.id }}" data-section-type="product-recommendations"  style="display:none">
       <div class="product-recommendations__inner">
           <div class="section-header text-center">
             <h2>おすすめ商品</h2>
@@ -458,26 +458,6 @@
           {% for option in product.metafields.options.product.value %}
             <li class="grid__item small--one-half medium-up--one-quarter">
               {% include 'product-card-grid', max_height: 250, product: option, show_vendor: section.settings.show_vendor %}
-              {% form 'product', option %}
-                <input type="hidden" value="{{ option.selected_or_first_available_variant.id }}" name="id">
-                <button type="submit" name="add"
-                  {% unless option.available %} aria-disabled="true"{% endunless %}
-                  aria-label="{% unless option.available %}{{ 'products.product.sold_out' | t }}{% else %}{{ 'products.product.add_to_cart' | t }}{% endunless %}"
-                  class="btn product-form__cart-submit{% if section.settings.enable_payment_button and product.selling_plan_groups == empty %} btn--secondary-accent{% endif %}"
-                  {% if settings.enable_ajax %}aria-haspopup="dialog"{% endif %}
-                  data-add-to-cart>
-                  <span data-add-to-cart-text>
-                    {% unless option.available %}
-                      {{ 'products.product.sold_out' | t }}
-                    {% else %}
-                      {{ 'products.product.add_to_cart' | t }}
-                    {% endunless %}
-                  </span>
-                  <span class="hide" data-loader>
-                    {% include 'icon-spinner' %}
-                  </span>
-                </button>
-              {% endform %}
             </li>
           {%- endfor -%}
         </ul>
@@ -501,18 +481,20 @@
   var playButton = document.getElementById("playVid");
   var video = document.getElementById("product_intro_video")
   // Event listener for the play/pause button
-  playButton.addEventListener("click", function() {
-    if (video.paused == true) {
-      // Play the video
-      video.play();
-  
-      // Update the button text to 'Pause'
-      playButton.style.opacity = 0;
+  if(playButton){
+    playButton.addEventListener("click", function() {
+      if (video.paused == true) {
+        // Play the video
+        video.play();
+    
+        // Update the button text to 'Pause'
+        playButton.style.opacity = 0;
+      }
+    }); 
+    video.addEventListener("pause", function() {
+      playButton.style.opacity = 1;
+    });
     }
-  }); 
-  video.addEventListener("pause", function() {
-    playButton.style.opacity = 1;
-  });
   var coll = document.getElementsByClassName("Collapsible__Button");
   var i;
   

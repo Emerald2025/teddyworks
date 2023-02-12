@@ -3725,10 +3725,10 @@ hr {
         margin: 15px 0; } }
   @media only screen and (max-width: 749px) {
     .site-header__logo {
-      padding-left: 22px;
+      padding-left: 55px;
       text-align: left; }
       .site-header__logo img {
-        margin: 0; } }
+        margin: auto; } }
 
 .site-header__logo-link {
   display: inline-block;
@@ -7216,7 +7216,11 @@ hr {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  position: relative;  
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+  padding-top: 0;
 }
 #shopify-section-1fd798b4-9918-44cc-b7d0-e84cc51b9d7b:after{
   content: '';
@@ -7383,19 +7387,22 @@ hr {
   text-align: center;
 }
 .product-template-top-inner .product-title{
-  color: white;
+  color: black;
   font-size: 70px;
   font-weight: bold;
   margin-top: 0;
   margin-bottom: 0;
-  line-height: 1.2em;  
+  line-height: 1.2em;
+  text-shadow: 1px 1px 0px white;  
 }
 .product-template-top-inner .catchcopy{
-  color: #e5e5e5;
+  color: black;
   font-size: 18px;
   line-height: 1.5em;
   font-weight: 400;  
   margin-bottom: 40px;
+  font-weight: bold;
+  text-shadow: 1px 1px 0px white;    
 }
 .product-template-top-inner a{
   padding: 12px 20px;
@@ -7413,7 +7420,7 @@ hr {
   width: 100%;
   height: 100%;
   content: '';
-  background: rgb(0 0 0 / 38%);
+/*   background: rgb(0 0 0 / 38%); */
   position: absolute;
   top: 0;
   left: 0;
@@ -7421,14 +7428,14 @@ hr {
 .template-product .main-content{
   padding-top: 0;
 }
-.product_template_detail{
-  display: flex;
-  align-items: center;
-  margin-bottom: 90px;  
+.product-points{
+  margin-left: -10px;
 }
-.product_template_detail>div{
-  max-width: 58.3%;
-  flex-basis: 58.3%;
+.product-points .grid__item{
+  padding-left: 10px;
+}
+.product_template_detail_image img{
+  width: 100%;
 }
 .product_template_detail_text{
   background: white;
@@ -7574,7 +7581,7 @@ hr {
     transform-origin: right center;
     transform: scaleX(0);
 }
-.template-product .thumbnails-wrapper {
+/*.template-product .thumbnails-wrapper {
     position: relative;
     top: 10px;
     text-align: center;
@@ -7614,11 +7621,9 @@ hr {
 }
 .template-product .product-single__thumbnail {
     margin: 0 auto;
-}
+}*/
 .product-variants .price{
-  justify-content: center;
   margin-bottom: 20px;
-  align-items: center;
 }
 .template-product .section-header{
     border-bottom: 1px solid;
@@ -7669,8 +7674,23 @@ hr {
 .product-info-content li{
   list-style: disc;
 }
+.product-info-content a{
+  text-decoration: underline;
+}
 html {
   scroll-behavior: smooth;
+}
+.site-header__icons button, .site-header__icons  a{
+  display: none;
+}
+#product-single-detail{
+  margin-top: 100px;
+}
+.template-index #shopify-section-footer{
+  margin-top: 0;
+}
+.product_template_video{
+  position: relative;
 }
 @media(max-width: 768px){
   #shopify-section-1f9fcd43-bcba-43e8-86d4-e7900e668177 .image-bar__item{
@@ -7687,8 +7707,7 @@ html {
   }
   #shopify-section-1fd798b4-9918-44cc-b7d0-e84cc51b9d7b{
     background-position: 80% center;
-    background-size: auto 100%;   
-    padding-top: 28vw;
+    background-size: auto 100%;
   }
   #shopify-section-1fd798b4-9918-44cc-b7d0-e84cc51b9d7b p{
     font-size: 18px;
@@ -7729,13 +7748,15 @@ html {
   #shopify-section-footer{
     margin-top: 50px
   }
+  .product-template-top{
+    height: 150vw;
+  }
   .product-template-top-inner .product-title{
     font-size: 30px;
   }
   .product-template-top-inner .catchcopy{
-    font-size: 14px;
-    margin-bottom: 20px;
-    color: white;
+    font-size: 20px;
+    margin: 20px 0;
     font-weight: bold;
   }
   .product-template-top-inner a{
@@ -7743,6 +7764,7 @@ html {
   }
   .product-template-top{
     margin-bottom: 50px;
+    background-position: center center;    
   }
   .product_template_detail, .product_template_right{
     flex-direction: column;
@@ -7759,7 +7781,6 @@ html {
     max-width: 90%; 
     text-align: center;
   }
-  
   .product_template_detail_text h3  {
     font-size: 21px;
   }
@@ -7777,4 +7798,16 @@ html {
     font-size: 25px;
     margin-bottom: 0;
   }
+  .quotes-slider__text p{
+    font-size: 17px;
+  }
+  .product_template_video{
+    margin-top: 100px;
+  }
+
+}
+@media(max-width: 767px){
+  .site-header__icons button.site-header__menu{
+    display: inline-block;
+  }  
 }
